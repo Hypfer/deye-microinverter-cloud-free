@@ -151,6 +151,8 @@ A `docker-compose.yml` entry for that tool could look like this:
     restart: always
 ```
 
+Keep in mind that this might change in the future so make sure to always check the docs of the project itself.
+
 
 ## Donate
 
