@@ -17,21 +17,22 @@ So far, the following devices are known to work like this:
 
 - Deye SUN600G3-EU-230
 
-it should also be the same for other inverters of the same series including rebrands such as Bosswerk.
-If you've verified that it works, feel free to extend this list.
+it should also be the same for other inverters of the same series including rebrands such as Bosswerk.<br/>
+If you have verified that it works with another device, feel free to extend this list.
 
 
 ## Preamble
 
-Compared to traditional PV setups where a single large inverter is connected to strings of many PV Panels, in a microinverter Setup, you have one small inverter for every PV Panel, every 2 PV Panels or occasionally even every 4 PV Panels.
+Compared to traditional PV setups where a single large inverter is connected to strings of many PV Panels, in a microinverter Setup, you have one small inverter for every 1-4 PV Panels.
 
 There are up- and downsides to both of these topologies but that is for now out of scope for this document.
+What you need to know is that microinverters are cheaper and scaled-down versions of their larger brothers.
 
-What is interesting about these microinverters is that due to their cheap price of 150-200€ (2023-03-08), they immensely reduce the initial investment required to get into solar power generation, making it accessible for almost everyone.
-Paired with two PV Panels that have also gotten remarkably cheap in recent years, you're looking at an investment of at most 1000€ to get free energy from the sun.
+Because they only cost 150-200€ they make getting into solar power generation accessible for many more people than ever before.
+Paired with two PV Panels you're looking at an investment of at most 1000€ to get free energy from the sun.
 
-Additionally, not requiring huge amounts of roof space for many panels to make sense financially can also enable people who don't own house and roof to get into solar power. Many gardens and balconies have more than enough space to house 1-4 solar panels.
-
+Additionally, because you only need few panels for the setup to make sense financially, often a balcony or garden can be enough for a small solar setup.
+This is especially interesting for people living in rental properties.
 
 ### Word of warning
 
@@ -40,10 +41,10 @@ After reading through way too many concerning posts and comments, here's what ha
 **Please** please please don't cut any corners when it comes to safety-critical stuff such as cabling and also mounting panels.
 You don't want your home to burn down or anyone to be killed by a falling 1.5m² 25kg PV Panel.
 
-Electricity is dangerous. So are heavy things with a huge attack surface for wind.
+Electricity is dangerous. So are heavy things with a huge attack surface for wind.<br/>
 When in doubt, contact a local electrician. They know what they're doing and will help you.
 
-If people do stupid stuff with this technology, it **will become inaccessible** to every one of us as there will be legislation preventing further idiot-induced injuries/harm, **ruining everything** for the vast majority of reasonable users.
+If people do stupid stuff with this technology, it **will become inaccessible** to every one of us, as there will be legislation preventing further idiot-induced injuries/harm, **ruining everything** for the vast majority of reasonable users.
 
 
 ## Setup
@@ -61,7 +62,6 @@ By default, your microinverter should provide a Wi-Fi Access point with an SSID 
 Using a laptop, connect to that using the default AP password `12345678`.
 
 In a browser, navigate to the IP of the inverter in that network which should by default be `http://10.10.100.254/`.
-
 Log in to the webinterface with the default credentials `admin:admin` and use that to configure Wi-Fi.
 
 The AP-mode can be a bit unstable so prepare for the webinterface stopping to work occasionally.
@@ -72,11 +72,10 @@ Once the inverter is connected to you Wi-Fi, this should not be an issue anymore
 
 After joining the inverter to you Wi-Fi network, connect to the webinterface again but this time using the IP in your network.
 
-Now, expand the `Device Information` on the `Status` page and ensure that your logger firmware version is at least `MW3_16U_5406_1.53` or newer, as older firmwares don't allow disabling of the Wi-Fi AP.
-This is a serious vulnerability as it allows an attacker to gain access to your real Wi-Fi credentials.
+Now, expand the `Device Information` on the `Status` page and ensure that your logger firmware version is at least `MW3_16U_5406_1.53` or newer.
+Older firmwares don't allow reconfiguration of the Wi-Fi AP, which is a a serious vulnerability, as it allows an attacker to easily gain access to your real Wi-Fi credentials.
 
 If your firmware is older, you can find firmware update files in this repo: [https://github.com/dasrecht/deye-firmware](https://github.com/dasrecht/deye-firmware).
-
 You can flash them using the `Upgrade Firmware` page of the webinterface.
 
 
@@ -113,13 +112,12 @@ If you feel like doing something arcane and/or want to build something for that 
 [https://github.com/Hypfer/deye-microinverter-cloud-free-assets](https://github.com/Hypfer/deye-microinverter-cloud-free-assets).
 
 Note that with internet access blocked, the inverter never receives any time information.
-This breaks the `Yield today` counter as it will never properly reset unless you manually set the time on each boot using modbus register 22,23 and 24.
+This breaks the `Yield today` counter as it will never properly reset unless you manually set the time on each boot using modbus register `22`, `23` and `24`.
 
 
 ### With Home Assistant
 
 With Home Assistant, the easiest way to get your inverter connected is by using [HACS](https://hacs.xyz/) to install the [Solarman](https://github.com/StephanJoubert/home_assistant_solarman) `custom_component`.
-
 Please refer to the project documentation on how to install and configure those.
 
 Home Assistant offers powerful tooling to store, visualize and process data right out of the box.
