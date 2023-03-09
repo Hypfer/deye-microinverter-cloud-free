@@ -20,6 +20,15 @@ So far, the following devices are known to work like this:
 it should also be the same for other inverters of the same series including rebrands such as Bosswerk.<br/>
 If you have verified that it works with another device, feel free to extend this list.
 
+## TL;DR
+
+Here are the main things you will want to know about these microinverters:
+
+- They have Wi-Fi
+- They can be connected to Wi-Fi networks via their webinterface
+- They can operate without an internet connection
+- They can operate without an account
+- They can be monitored and controlled via ModbusTCP
 
 ## Preamble
 
