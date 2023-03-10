@@ -169,6 +169,26 @@ A `docker-compose.yml` entry for that tool could look like this:
 
 Keep in mind that this might change in the future so make sure to always check the docs of the project itself.
 
+## Misc
+
+These inverters also have a hidden configuration page that is reachable via `/config_hide.html`.
+
+There, it is possible to configure
+
+- Cloud Server A and B
+- Serial Port parameters (which serial port?)
+- The port of the modbusTCP server of the inverter
+- Enable/Disable the AP
+- Switch the branding(?)
+
+<details>
+<summary>Click here to show a screenshot of the page</summary>
+
+![config hide screenshot](img/config_hide.png)
+
+</details>
+
+
 
 ## Donate
 
