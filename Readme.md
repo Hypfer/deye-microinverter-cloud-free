@@ -73,6 +73,8 @@ Using a laptop, connect to that using the default AP password `12345678`.
 In a browser, navigate to the IP of the inverter in that network which should by default be `http://10.10.100.254/`.
 Log in to the webinterface with the default credentials `admin:admin` and use that to configure Wi-Fi.
 
+![wifi configuration](img/wifi_config.png)
+
 The AP-mode can be a bit unstable so prepare for the webinterface stopping to work occasionally.
 Once the inverter is connected to you Wi-Fi, this should not be an issue anymore.
 
@@ -82,6 +84,9 @@ Once the inverter is connected to you Wi-Fi, this should not be an issue anymore
 After joining the inverter to you Wi-Fi network, connect to the webinterface again but this time using the IP in your network.
 
 Now, expand the `Device Information` on the `Status` page and ensure that your logger firmware version is at least `MW3_16U_5406_1.53` or newer.
+
+![firmware version](img/firmware_version.png)
+
 Older firmwares don't allow reconfiguration of the Wi-Fi AP, which is a a serious vulnerability, as it allows an attacker to easily gain access to your real Wi-Fi credentials.
 
 If your firmware is older, you can find firmware update files in this repo: [https://github.com/dasrecht/deye-firmware](https://github.com/dasrecht/deye-firmware).
@@ -91,6 +96,8 @@ You can flash them using the `Upgrade Firmware` page of the webinterface.
 ### Securing the AP
 
 With the logger firmware upgraded, you should now use the webinterface to change SSID and Password for the AP of the inverter.
+
+![ap config](img/ap_config.png)
 
 Pick something not immediately obvious and relatively secure as - as mentioned before - it is all that prevents an attacker from connecting to that AP and reading out your main Wi-Fi credentials.
 
