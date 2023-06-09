@@ -171,6 +171,8 @@ Keep in mind that this might change in the future so make sure to always check t
 
 ## Misc
 
+### Hidden configuration page
+
 These inverters also have a hidden configuration page that is reachable via `/config_hide.html`.
 
 There, it is possible to configure
@@ -188,6 +190,175 @@ There, it is possible to configure
 
 </details>
 
+### AT Commands
+
+Apart from the modbus over tcp interface, these inverters also provide another interface on port 48899 where you can talk to it over AT commands like a modem.
+For that, for now you can use this tool: [https://github.com/s10l/deye-logger-at-cmd](https://github.com/s10l/deye-logger-at-cmd).
+
+Some firmware versions seem to respond to the `AT+H` command with a full list of commands.
+Mine doesn't, however a [user fortunately posted a full response](https://www.photovoltaikforum.com/thread/180129-deye-sun600-und-sun2000-erfahrungen/?postID=2846951#post2846951) which is the source for this table:
+
+<details>
+<summary>Click here to show the AT command table</summary>
+
+| Command                                   | Vendor Description                                      |
+|-------------------------------------------|---------------------------------------------------------|
+| AT+TIME                                   | Set/Get Device Time                                     |
+| AT+ADDRESS                                | Set/Get Device Address                                  |
+| AT+KEY                                    | Set/Get Device Password                                 |
+| AT+MTYPE                                  | Set/Get Device Mtype                                    |
+| AT+CNMOSAVE                               | Set/Get TCPB Link Mode                                  |
+| AT+DEVICENUM                              | Set/Get Device Link Num                                 |
+| AT+DEVSELCTL                              | Set/Get Web Device List Info                            |
+| AT+NDBGS                                  | Set/Get Debug Status                                    |
+| AT+FFCLER                                 | Clear File in Flash                                     |
+| AT+LANGSEL                                | Select Language                                         |
+| AT+ADTIME                                 | Set/Get Device Time                                     |
+| AT+YZFTIME                                | Set/Get Device factory Time                             |
+| AT+TZEARSE                                | Clear yz File in Flash                                  |
+| AT+YZACK                                  | Clear yz File in Flash                                  |
+| AT+YZTIME                                 | Clear yz File in Flash                                  |
+| AT+YZWKTIME                               | Clear yz File in Flash                                  |
+| AT+YZERRCLR                               | Clear yz File in Flash                                  |
+| AT+YZDBNUM                                | Clear yz File in Flash                                  |
+| AT+YZDB                                   | Clear yz File in Flash                                  |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZLOG                                  | Clear yz File in Flash                                  |
+| AT+YZAPP                                  | Clear yz File in Flash                                  |
+| AT+YZAPSTAT                               | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZWAKEYCTL                             | Clear yz File in Flash                                  |
+| AT+YZsize                                 | Clear yz File in Flash                                  |
+| AT+YZFLSHTEST=<password>,<devlist_status> |                                                         |
+| AT+YZFLSHTEST=<password>,<devlist_status> |                                                         |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZVER                                  | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+YZEXPFUN                               | Clear yz File in Flash                                  |
+| AT+TMODE                                  | Set/Get the UART work mode.                             |
+| AT+ENTM                                   | Goto Through MOde.                                      |
+| AT+UART                                   | Set/Get the UART0/UART1 Parameters.                     |
+| AT+WSMAC                                  | Set/Get Module MAC Address.                             |
+| AT+WAMAC                                  | Get Module MAC Address in AP mode.                      |
+| AT+NDBGL                                  | set/get debug level                                     |
+| AT+RELD                                   | Reload the default setting and reboot.                  |
+| AT+RLDEN                                  | Put on/off the Reload Pin.                              |
+| AT+MID                                    | Get The Module ID.                                      |
+| AT+WRMID                                  | Write Module ID.                                        |
+| AT+ASWD                                   | Set/Query WiFi configuration code.                      |
+| AT+VER                                    | Get application version.                                |
+| AT+BVER                                   | Get bootloader version.                                 |
+| AT+HWVER                                  | Get hardware version.                                   |
+| AT+FCLR                                   | Clear Fsetting.                                         |
+| AT+CFGRD                                  | Get current system config.                              |
+| AT+CFGTF                                  | Save Current Config to Default Config.                  |
+| AT+SMEM                                   | show system memory stat                                 |
+| AT+OTA                                    | OTA                                                     |
+| AT+UPURL                                  | Set/Get the path of remote upgrade.                     |
+| AT+CMDPW                                  | Set/Get cmd password in throuphput mode.                |
+| AT+UID                                    | Set/Get UID.                                            |
+| AT+E                                      | Echo ON/Off, to turn on/off command line echo function. |
+| AT+Z                                      | Reset the Module.                                       |
+| AT+SRST                                   | Soft Reset the Module.                                  |
+| AT+H                                      | show help                                               |
+| AT+NETP                                   | Set/Get the Net Protocol Parameters.                    |
+| AT+TCPLK                                  | Get The state of TCP link.                              |
+| AT+TCPTO                                  | Set/Get TCP time out.                                   |
+| AT+TCPDIS                                 | Connect/Dis-connect the TCP Client link                 |
+| AT+MAXSK                                  | Set/Get MAX num of TCP socket (1~5)                     |
+| AT+RCV                                    | Recv data from socket_a                                 |
+| AT+SEND                                   | Send data to socket_a                                   |
+| AT+SOCKB                                  | Set/Get Parameters of socket_b.                         |
+| AT+TCPLKB                                 | Get The state of TCP_B link.                            |
+| AT+TCPTOB                                 | Set/Get TCP_B time out.                                 |
+| AT+TCPDISB                                | Connect/Dis-connect the TCP_B Client link.              |
+| AT+RCVB                                   | Recv data from socket_b                                 |
+| AT+SNDB                                   | Send data to socket_b                                   |
+| AT+WMODE                                  | Set/Get the WIFI Operation Mode (AP or STA).            |
+| AT+WSSSID                                 | Set/Get the AP's SSID of WIFI STA Mode.                 |
+| AT+WSKEY                                  | Set/Get the Security Parameters of WIFI STA Mode.       |
+| AT+WSLK                                   | Get Link Status of the Module (Only for STA Mode).      |
+| AT+WSLQ                                   | Get Link Quality of the Module (Only for STA Mode).     |
+| AT+WAP                                    | Set/Get the AP parameters.                              |
+| AT+WAKEY                                  | Set/Get the Security Parameters of WIFI AP Mode.        |
+| AT+WALK                                   | Show sta information of AP connection.                  |
+| AT+WALKIND                                | enable/disable LED indication of AP connection.         |
+| AT+WAPMXSTA                               | Set/Get the Max Number Of Sta Connected to Ap.          |
+| AT+WSCAN                                  | Get The AP site Survey (only for STA Mode).             |
+| AT+SMTLK                                  | Start Smart Configuration.                              |
+| AT+SMTLKST=mode,protocol                  | Setup smartlnk mode and protocol.                       |
+| AT+SMARTAPCONFIG                          | Enable/disable smart AP config function.                |
+| AT+SMARTAPSTART                           | Start smart AP config function.                         |
+| AT+WPS                                    | Start WPS.                                              |
+| AT+DISPS                                  | Disable power saving mode of WIFI                       |
+| AT+WIFI=UP/DOWN                           | Power down or up  the wifi chip.                        |
+| AT+MDCH                                   | Put on/off automatic switching WIFI mode.               |
+| AT+WSLKO                                  | Enable/Disable connect router with the best signal.     |
+| AT+DTIM                                   | Set/Get station listen interval(1~3).                   |
+| AT+UDPLCPT                                | Set/Get local UDP port.                                 |
+| AT+PING                                   | General PING command.                                   |
+| AT+WANN                                   | Set/Get The WAN setting if in STA mode.                 |
+| AT+LANN                                   | Set/Get The LAN setting if in ADHOC mode.               |
+| AT+WADHCP                                 | enable/disable AP dhcp server and set ip address pool   |
+| AT+WEBU                                   | Set/Get the Login Parameters of WEB page.               |
+| AT+WEBVER                                 | Get WEB version.                                        |
+| AT+PLANG=EN/CN                            | Set/Get the language of WEB page.                       |
+| AT+WSDNS                                  | Set/Get the DNS Server address.                         |
+| AT+NTPEN                                  | Enable/Disable NTP Server.                              |
+| AT+NTPRF                                  | Set/Query NTP.                                          |
+| AT+NTPTM                                  | Set/Query Ntp Time.                                     |
+| AT+NTPSER                                 | Set/Query Ntp Server.                                   |
+| AT+TXPWR                                  | Set/Get wifi rf tx power.                               |
+| AT+RFTESTMODE                             | RF test mode ON/OFF.                                    |
+
+</details>
+
+### Increasing the data logging interval
+
+The data reported by the logger actually isn't real-time but averaged and reported in a specific interval.
+By default, this interval is 5 minutes, meaning that even if you query the modbus registers every 30s,
+they will only contain new data after those 5 minutes have passed.
+
+Users of the cloud can contact the deye support to request a change of that interval to a different value.
+While this command was [captured and documented by a user](https://www.photovoltaikforum.com/thread/179529-daten-von-deye-sun-mikrowechselrichtern-abfangen/?postID=2844327#post2844327),
+it [unfortunately only seems to affect the data reported to the cloud](https://www.photovoltaikforum.com/thread/180129-deye-sun600-und-sun2000-erfahrungen/?postID=3116929#post3116929) and not
+the contents of the local modbus registers which still stick to the 5min interval :(
+
+
+Moving forward, there are at least these two options:
+
+1. Figure out if there's also a way to control the interval for the modbus interface
+2. Write a mock cloud for the inverter that receives data with that higher update interval
+
+<details>
+<summary>Click here to learn how to change that interval</summary>
+
+The interval can be controlled using the `AT+TIME` command.
+Sending just the command will respond with the current settings which by default are `5,60,120`.
+According to that forum post, those values mean:
+- 5 -> Data Uploading Period (5min)
+- 60 -> Data Acquisition Period (60s)
+- 120 -> Heart Rate (120s)
+
+To change this setting, the same AT command can be used if you know the magic number that serves as a password.
+You can fetch that by sending the `AT+KEY` command. By default, it seems to be `214028`.
+
+With the key acquired, sending `AT+TIME=214028,1,60,120` will then set the Data Uploading Period to 1min.
+
+</details>
 
 
 ## Donate
