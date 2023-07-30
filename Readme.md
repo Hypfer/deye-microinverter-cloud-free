@@ -8,7 +8,7 @@ Solar power generation work best if there are no clouds anywhere to be seen :)
 This repository aims to document how to use Deye microinverters entirely local only and cloud free.
 It consolidates the knowledge that at the time of writing was spread over hundreds of different posts, issues and comments.
 
-As of now it will unfortunately still require you to block traffic in your router, however you won't have to install any apps or create any accounts.
+Furthermore, it also features a cloud replacement implementation so you won't have to install any apps or create any accounts.
 You also won't have to share any e-mail address or phone number.
 
 ## Devices
@@ -29,7 +29,7 @@ Here are the main things you will want to know about these microinverters:
 - They can operate without an internet connection
 - They can operate without an account
 - They can be monitored and controlled via their local ModbusTCP interface
-- There's also a cloud replacement available that pushes all data to MQTT. Check the [dummycloud](./dummycloud) folder in this repo
+- You can also completely replace the cloud with a local implementation: [dummycloud](./dummycloud)
 
 ## Preamble
 
