@@ -19,3 +19,19 @@ I'd still keep the firewall rules preventing the inverter from phoning home in p
 ## Deployment
 
 The dummycloud can be started using `npm run start`. Next to this readme, there's also a dockerfile provided.
+
+A `docker-compose.yml` entry could for example look like this:
+
+```yml
+  deye-dummycloud:
+    build:
+      context: ./deye-microinverter-cloud-free/dummycloud/
+      dockerfile: Dockerfile
+    container_name: "deye-dummycloud"
+    restart: always
+    environment:
+      - "LOGLEVEL=info"
+      - "MQTT_BROKER_URL=mqtt://foobar.example"
+    ports:
+      - "10000:10000"
+```
