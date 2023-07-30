@@ -28,7 +28,8 @@ Here are the main things you will want to know about these microinverters:
 - They can be connected to Wi-Fi networks via their webinterface
 - They can operate without an internet connection
 - They can operate without an account
-- They can be monitored and controlled via ModbusTCP
+- They can be monitored and controlled via their local ModbusTCP interface
+- There's also a cloud replacement available that pushes all data to MQTT. Check the [dummycloud](./dummycloud) folder in this repo
 
 ## Preamble
 
@@ -118,7 +119,11 @@ Either way, just blocking internet access entirely should be much easier in most
 ## Usage
 
 After connecting the inverter to your Wi-Fi network, securing it and blocking its internet access, all you need to do now is monitor and control it.
-This can be done via ModbusTCP in a slightly custom way that uses the inverter logger serial number for authentication.
+
+For this there are different options.
+
+### Local polling
+Most of the options rely on polling the local modbusTCP interface that uses the inverter logger serial number for authentication.
 
 To get this serial, simply look at the sticker on the device:
 
@@ -131,7 +136,7 @@ Note that with internet access blocked, the inverter never receives any time inf
 This breaks the `Yield today` counter as it will never properly reset unless you manually set the time on each boot using modbus register `22`, `23` and `24`.
 
 
-### With Home Assistant
+#### With Home Assistant
 
 With Home Assistant, the easiest way to get your inverter connected is by using [HACS](https://hacs.xyz/) to install the [Solarman](https://github.com/StephanJoubert/home_assistant_solarman) `custom_component`.
 Please refer to the project documentation on how to install and configure those.
@@ -144,7 +149,7 @@ The real world will obviously look slightly different but the idea should be the
 ![example home assistant dashboard](img/dashboard_example_mock.png)
 
 
-### With other smarthome software
+#### With other smarthome software
 
 If you're using OpenHAB, FHEM, ioBroker or something else, as long as it can speak MQTT, you can use for example [https://github.com/kbialek/deye-inverter-mqtt](https://github.com/kbialek/deye-inverter-mqtt) to connect your inverter to your smarthome.
 
@@ -168,6 +173,21 @@ A `docker-compose.yml` entry for that tool could look like this:
 ```
 
 Keep in mind that this might change in the future so make sure to always check the docs of the project itself.
+
+### Using the dummycloud
+
+If you don't want polling and/or are unhappy with having the inverter in a perpetual state of reconnection to the cloud,
+you can instead deploy the cloud replacement that can be found in the [dummycloud](./dummycloud) folder in this repository.
+
+This will make the inverter happy, provide it with the correct time for daily counters to work and push all the data to your MQTT broker.
+It will also autoconfigure entities for home assistant.
+
+![dummycloud_demo.png](./img/dummycloud_demo.png)
+
+It is however a bit more complicated than the polling approaches, as it requires you to understand how networks work
+and how to deploy a service somewhere. Nothing too arcane of course but if you don't know anything about linux, you might want to pass on this.
+
+For further information, check out the [dummycloud](./dummycloud) folder.
 
 ## Misc
 
@@ -337,11 +357,7 @@ While this command was [captured and documented by a user](https://www.photovolt
 it [unfortunately only seems to affect the data reported to the cloud](https://www.photovoltaikforum.com/thread/180129-deye-sun600-und-sun2000-erfahrungen/?postID=3116929#post3116929) and not
 the contents of the local modbus registers which still stick to the 5min interval :(
 
-
-Moving forward, there are at least these two options:
-
-1. Figure out if there's also a way to control the interval for the modbus interface
-2. Write a mock cloud for the inverter that receives data with that higher update interval
+Because of that, I've built a cloud replacement for these inverters that can be found in the dummycloud folder in this repo.
 
 <details>
 <summary>Click here to learn how to change that interval</summary>
@@ -363,6 +379,6 @@ With the key acquired, sending `AT+TIME=214028,1,60,120` will then set the Data 
 
 ## Donate
 
-If this documentation effort brought value to you, there's the option to leave a small donation using the "Sponsor" button on top of the repo or by [clicking right here](https://github.com/sponsors/Hypfer).
+If this software and documentation effort brought value to you, there's the option to leave a small donation using the "Sponsor" button on top of the repo or by [clicking right here](https://github.com/sponsors/Hypfer).
 
 Thanks!

@@ -1,0 +1,14 @@
+{
+  "name": "deye-dummycloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "mqtt": "^4.3.7"
+  }
+}
