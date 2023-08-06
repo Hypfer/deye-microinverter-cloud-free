@@ -19,10 +19,22 @@ class MqttClient {
             this.handleData(data);
         })
     }
-    
+
     initialize() {
-        this.client = mqtt.connect(process.env.MQTT_BROKER_URL);
-        
+        const options = {
+            clientId: `deye_dummycloud_${Math.random().toString(16).slice(2, 10)}`,
+        };
+
+        if (process.env.MQTT_USERNAME && process.env.MQTT_PASSWORD) {
+            options.username = process.env.MQTT_USERNAME;
+            options.password = process.env.MQTT_PASSWORD;
+        } else if (process.env.MQTT_USERNAME || process.env.MQTT_PASSWORD) {
+            Logger.error("Both MQTT_USERNAME and MQTT_PASSWORD need to be set.");
+            return;
+        }
+
+        this.client = mqtt.connect(process.env.MQTT_BROKER_URL, options);
+
         this.client.on("connect", () => {
             Logger.info(`Connected to MQTT broker`);
         });
@@ -38,7 +50,6 @@ class MqttClient {
         this.client.on("reconnect", () => {
             Logger.info("Attempting to reconnect to MQTT broker");
         });
-        
     }
     
     handleHandshake(data) {

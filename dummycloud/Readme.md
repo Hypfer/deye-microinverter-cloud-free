@@ -10,7 +10,8 @@ It also takes care of Home Assistant autodiscovery leading to things just workin
 The dummycloud is configured using environment variables to be container-friendly to use.
 - `LOGLEVEL` (defaults to `info`)
 - `MQTT_BROKER_URL` (no default. Should look like `mqtt://foo.bar`)
-
+- `MQTT_USERNAME` (no default, optional.)
+- `MQTT_PASSWORD` (no default, optional.)
 ## Inverter Setup
 
 Using the `/config_hide.html` of the inverter webinterface, simply point `Server A Setting` and `Optional Server Setting` to the host this is running on.
@@ -32,6 +33,9 @@ A `docker-compose.yml` entry could for example look like this:
     environment:
       - "LOGLEVEL=info"
       - "MQTT_BROKER_URL=mqtt://foobar.example"
+      # User those variables if the MQTT broker requires username and password
+      # - "MQTT_USERNAME=example-user"
+      # - "MQTT_PASSWORD=example-password"
     ports:
       - "10000:10000"
 ```
