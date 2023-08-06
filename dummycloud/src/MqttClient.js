@@ -22,7 +22,7 @@ class MqttClient {
 
     initialize() {
         const options = {
-            clientId: "deye_dummycloud" + Math.random().toString(16).slice(2, 10),
+            clientId: `deye_dummycloud_${Math.random().toString(16).slice(2, 10)}`,
         };
 
         if (process.env.MQTT_USERNAME && process.env.MQTT_PASSWORD) {
