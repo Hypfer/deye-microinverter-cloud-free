@@ -22,14 +22,18 @@ class MqttClient {
 
     initialize() {
         const options = {
-            clientId: `deye_dummycloud_${Math.random().toString(16).slice(2, 10)}`,
+            clientId: `deye_dummycloud_${Math.random().toString(16).slice(2, 9)}`,  // 23 characters allowed
         };
 
-        if (process.env.MQTT_USERNAME && process.env.MQTT_PASSWORD) {
+        if (process.env.MQTT_USERNAME) {
             options.username = process.env.MQTT_USERNAME;
-            options.password = process.env.MQTT_PASSWORD;
-        } else if (process.env.MQTT_USERNAME || process.env.MQTT_PASSWORD) {
-            Logger.error("Both MQTT_USERNAME and MQTT_PASSWORD need to be set.");
+
+            if (process.env.MQTT_PASSWORD) {
+                options.password = process.env.MQTT_PASSWORD;
+            }
+        } else if (process.env.MQTT_PASSWORD) {
+            // MQTT_PASSWORD is set but MQTT_USERNAME is not
+            Logger.error("MQTT_PASSWORD is set but MQTT_USERNAME is not. MQTT_USERNAME must be set if MQTT_PASSWORD is set.");
             return;
         }
 
