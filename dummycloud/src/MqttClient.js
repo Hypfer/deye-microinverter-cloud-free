@@ -34,7 +34,7 @@ class MqttClient {
         } else if (process.env.MQTT_PASSWORD) {
             // MQTT_PASSWORD is set but MQTT_USERNAME is not
             Logger.error("MQTT_PASSWORD is set but MQTT_USERNAME is not. MQTT_USERNAME must be set if MQTT_PASSWORD is set.");
-            return;
+            process.exit(1);
         }
 
         this.client = mqtt.connect(process.env.MQTT_BROKER_URL, options);
