@@ -68,17 +68,29 @@ class MqttClient {
             this.client.publish(`${baseTopic}/pv/${i}/v`, data.payload.pv[`${i}`].v.toString());
             this.client.publish(`${baseTopic}/pv/${i}/i`, data.payload.pv[`${i}`].i.toString());
             this.client.publish(`${baseTopic}/pv/${i}/w`, data.payload.pv[`${i}`].w.toString());
-            this.client.publish(`${baseTopic}/pv/${i}/kWh_today`, data.payload.pv[`${i}`].kWh_today.toString());
+            this.client.publish(
+                `${baseTopic}/pv/${i}/kWh_today`, 
+                data.payload.pv[`${i}`].kWh_today.toString(),
+                {retain: true}
+            );
             
             if (data.payload.pv[`${i}`].kWh_total > 0) {
-                this.client.publish(`${baseTopic}/pv/${i}/kWh_total`, data.payload.pv[`${i}`].kWh_total.toString());
+                this.client.publish(
+                    `${baseTopic}/pv/${i}/kWh_total`, 
+                    data.payload.pv[`${i}`].kWh_total.toString(),
+                    {retain: true}
+                );
             }
         }
 
         this.client.publish(`${baseTopic}/grid/active_power_w`, data.payload.grid.active_power_w.toString());
         
         if (data.payload.grid.kWh_total > 0) {
-            this.client.publish(`${baseTopic}/grid/kWh_total`, data.payload.grid.kWh_total.toString());
+            this.client.publish(
+                `${baseTopic}/grid/kWh_total`, 
+                data.payload.grid.kWh_total.toString(),
+                {retain: true}
+            );
         }
         this.client.publish(`${baseTopic}/grid/v`, data.payload.grid.v.toString());
         this.client.publish(`${baseTopic}/grid/hz`, data.payload.grid.hz.toString());
