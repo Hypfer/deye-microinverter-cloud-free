@@ -1,5 +1,5 @@
-const Logger = require("./src/Logger");
 const DummyCloud = require("./src/DummyCloud");
+const Logger = require("./src/Logger");
 const MqttClient = require("./src/MqttClient");
 
 if (process.env.LOGLEVEL) {

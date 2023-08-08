@@ -14,7 +14,7 @@ class Protocol {
             msgIDResponse: buf[5],
             msgIDRequest: buf[6],
             loggerSerial: buf.readUint32LE(7)
-        }
+        };
 
         if (result.magic !== 0xa5) {
             throw new Error("Invalid header magic: " + result.magic);
@@ -24,14 +24,14 @@ class Protocol {
             throw new Error("Payload length from header doesn't match packet length. Truncated?");
         }
 
-        return result
+        return result;
     }
 
     static parseFooter(buf) {
         const result = {
             checksum: buf[buf.length - 2],
             magic: buf[buf.length - 1] //should always be 0x15
-        }
+        };
 
         if (result.magic !== 0x15) {
             throw new Error("Invalid footer magic: " + result.magic);
@@ -59,7 +59,7 @@ class Protocol {
         if (typeStr) {
             Logger.debug(`Received packet of type "${typeStr}"`);
         } else {
-            Logger.warn(`Received packet of unknown type "0x${header.type.toString(16)}"`)
+            Logger.warn(`Received packet of unknown type "0x${header.type.toString(16)}"`);
         }
 
         return {
@@ -145,7 +145,7 @@ class Protocol {
 
             //for some reason everything after byte ~120 is all BE compared to the above?
 
-        }
+        };
     }
 
     static parseLoggerPacketPayload(packet) {
@@ -155,7 +155,7 @@ class Protocol {
             ip: truncateToNullTerminator(packet.payload.subarray(65, 82).toString("ascii")),
             ver: truncateToNullTerminator(packet.payload.subarray(89, 130).toString("ascii")), //hw revision maybe?
             ssid: truncateToNullTerminator(packet.payload.subarray(172, 210).toString("ascii")),
-        }
+        };
     }
 
     static buildTimeResponse(packet) {
@@ -177,7 +177,7 @@ class Protocol {
         response.writeUint32LE(
             Math.round(Date.now()/1000),
             13
-        )
+        );
         response.writeUint32LE(
             0,
             17
@@ -196,7 +196,7 @@ class Protocol {
                 `${2000 + buf[0]}-${buf[1].toString().padStart(2, "0")}-${buf[2].toString().padStart(2, "0")}T`,
                 `${buf[3].toString().padStart(2, "0")}:${buf[4].toString().padStart(2, "0")}:${buf[5].toString().padStart(2, "0")}Z`
             ].join("")
-        )
+        );
     }
 }
 
@@ -205,13 +205,13 @@ Protocol.MESSAGE_REQUEST_TYPES = {
     DATA: 0x42,
     // wifi info is 0x43?
     HEARTBEAT: 0x47,
-}
+};
 
 Protocol.MESSAGE_RESPONSE_TYPES = {
     HANDSHAKE: 0x11,
     DATA: 0x12,
     // wifi info reply is 0x13?
     HEARTBEAT: 0x17,
-}
+};
 
 module.exports = Protocol;

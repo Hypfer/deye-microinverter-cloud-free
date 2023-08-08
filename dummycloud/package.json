@@ -4,11 +4,21 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+
+    "lint": "eslint -c .automated.eslintrc.json .",
+    "lint_fix": "eslint -c .automated.eslintrc.json . --fix"
   },
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
     "mqtt": "^4.3.7"
+  },
+  "devDependencies": {
+    "eslint": "8.16.0",
+    "eslint-plugin-jsdoc": "39.3.0",
+    "eslint-plugin-regexp": "1.7.0",
+    "eslint-plugin-sort-keys-fix": "1.1.2",
+    "eslint-plugin-sort-requires": "git+https://npm@github.com/Hypfer/eslint-plugin-sort-requires.git#2.1.1"
   }
 }

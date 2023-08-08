@@ -1,23 +1,23 @@
-const mqtt = require("mqtt");
 const Logger = require("./Logger");
+const mqtt = require("mqtt");
 
 
 class MqttClient {
     /**
      * 
-     * @param {DummyCloud} dummyCloud
+     * @param {import("./DummyCloud")} dummyCloud
      */
     constructor(dummyCloud) {
         this.dummyCloud = dummyCloud;
-        
+
         this.autoconfTimestamps = {};
-        
+
         this.dummyCloud.onHandshake((data) => {
             this.handleHandshake(data);
         });
         this.dummyCloud.onData((data) => {
             this.handleData(data);
-        })
+        });
     }
 
     initialize() {
@@ -40,7 +40,7 @@ class MqttClient {
         this.client = mqtt.connect(process.env.MQTT_BROKER_URL, options);
 
         this.client.on("connect", () => {
-            Logger.info(`Connected to MQTT broker`);
+            Logger.info("Connected to MQTT broker");
         });
 
         this.client.on("error", (e) => {
@@ -55,13 +55,13 @@ class MqttClient {
             Logger.info("Attempting to reconnect to MQTT broker");
         });
     }
-    
+
     handleHandshake(data) {
         // Nothing to see here
     }
-    
+
     handleData(data) {
-        this.ensureAutoconf(data.header.loggerSerial.toString())
+        this.ensureAutoconf(data.header.loggerSerial.toString());
         const baseTopic = `${MqttClient.TOPIC_PREFIX}/${data.header.loggerSerial.toString()}`;
 
         for (let i = 1; i <= 4; i++) {
@@ -69,14 +69,14 @@ class MqttClient {
             this.client.publish(`${baseTopic}/pv/${i}/i`, data.payload.pv[`${i}`].i.toString());
             this.client.publish(`${baseTopic}/pv/${i}/w`, data.payload.pv[`${i}`].w.toString());
             this.client.publish(
-                `${baseTopic}/pv/${i}/kWh_today`, 
+                `${baseTopic}/pv/${i}/kWh_today`,
                 data.payload.pv[`${i}`].kWh_today.toString(),
                 {retain: true}
             );
-            
+
             if (data.payload.pv[`${i}`].kWh_total > 0) {
                 this.client.publish(
-                    `${baseTopic}/pv/${i}/kWh_total`, 
+                    `${baseTopic}/pv/${i}/kWh_total`,
                     data.payload.pv[`${i}`].kWh_total.toString(),
                     {retain: true}
                 );
@@ -84,10 +84,10 @@ class MqttClient {
         }
 
         this.client.publish(`${baseTopic}/grid/active_power_w`, data.payload.grid.active_power_w.toString());
-        
+
         if (data.payload.grid.kWh_total > 0) {
             this.client.publish(
-                `${baseTopic}/grid/kWh_total`, 
+                `${baseTopic}/grid/kWh_total`,
                 data.payload.grid.kWh_total.toString(),
                 {retain: true}
             );
@@ -97,11 +97,11 @@ class MqttClient {
 
         this.client.publish(`${baseTopic}/inverter/radiator_temperature`, data.payload.inverter.radiator_temp_celsius.toString());
     }
-    
+
     ensureAutoconf(loggerSerial) {
         // (Re-)publish every 4 hours
         if (Date.now() - (this.autoconfTimestamps[loggerSerial] ?? 0) <= 4 * 60 * 60 * 1000) {
-            return;   
+            return;
         }
         const baseTopic = `${MqttClient.TOPIC_PREFIX}/${loggerSerial.toString()}`;
         const device = {
@@ -200,7 +200,7 @@ class MqttClient {
             `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_grid_active_power_w/config`,
             JSON.stringify({
                 "state_topic": `${baseTopic}/grid/active_power_w`,
-                "name":`Grid Power (Active)`,
+                "name":"Grid Power (Active)",
                 "unit_of_measurement": "W",
                 "device_class": "power",
                 "state_class": "measurement",
@@ -215,7 +215,7 @@ class MqttClient {
             `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_grid_kWh_total/config`,
             JSON.stringify({
                 "state_topic": `${baseTopic}/grid/kWh_total`,
-                "name":`Grid Energy Total`,
+                "name":"Grid Energy Total",
                 "unit_of_measurement": "kWh",
                 "device_class": "energy",
                 "state_class": "total_increasing",
@@ -229,7 +229,7 @@ class MqttClient {
             `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_grid_v/config`,
             JSON.stringify({
                 "state_topic": `${baseTopic}/grid/v`,
-                "name":`Grid Voltage`,
+                "name":"Grid Voltage",
                 "unit_of_measurement": "V",
                 "device_class": "voltage",
                 "state_class": "measurement",
@@ -244,7 +244,7 @@ class MqttClient {
             `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_grid_hz/config`,
             JSON.stringify({
                 "state_topic": `${baseTopic}/grid/hz`,
-                "name":`Grid Frequency`,
+                "name":"Grid Frequency",
                 "unit_of_measurement": "Hz",
                 "device_class": "frequency",
                 "state_class": "measurement",
@@ -260,7 +260,7 @@ class MqttClient {
             `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_inverter_radiator_temperature/config`,
             JSON.stringify({
                 "state_topic": `${baseTopic}/inverter/radiator_temperature`,
-                "name":`Radiator Temperature`,
+                "name":"Radiator Temperature",
                 "unit_of_measurement": "°C",
                 "device_class": "temperature",
                 "state_class": "measurement",
@@ -277,6 +277,6 @@ class MqttClient {
     }
 }
 
-MqttClient.TOPIC_PREFIX = "deye-dummycloud"
+MqttClient.TOPIC_PREFIX = "deye-dummycloud";
 
 module.exports = MqttClient;
