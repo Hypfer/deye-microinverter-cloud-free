@@ -113,11 +113,12 @@ class Protocol {
             grid: {
                 active_power_w: packet.payload.readUInt32LE(59),
 
-                kWh_total: packet.payload.readUInt16LE(37) / 10,
+                kWh_daily: packet.payload.readUInt32LE(33) / 100,
+                kWh_total: packet.payload.readUInt32LE(37) / 10,
 
                 v: packet.payload.readUInt16LE(45) / 10,
                 i: packet.payload.readUInt16LE(51) / 10,
-                //TODO: Daily kWh?
+
                 hz: packet.payload.readUInt16LE(57) / 100,
 
             },
@@ -126,7 +127,9 @@ class Protocol {
             },
             inverter_meta: {
                 rated_power_w: packet.payload.readUInt16BE(129) / 10,
+                mppt_count: packet.payload.readInt8(131),
 
+                startup_self_check_time: packet.payload.readUInt16BE(243),
                 current_time: Protocol.parseTime(packet.payload.subarray(245, 251)),
 
 
