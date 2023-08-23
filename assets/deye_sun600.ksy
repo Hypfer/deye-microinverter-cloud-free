@@ -51,7 +51,9 @@ types:
       - size: 2
       - id: inverter_id
         size: 10
-      - size: 6
+      - size: 2
+      - id: kwh_today
+        type: u4le
       - id: kwh_total
         type: u4le
       - size: 4
@@ -99,7 +101,9 @@ types:
       - size: 4
       - id: inverter_rated_power_w
         type: u2be
-      - size: 5
+      - id: mppt_count
+        type: u1
+      - size: 4
       - id: pv_1_kwh_today
         type: u2le
       - id: pv_2_kwh_today
@@ -135,7 +139,8 @@ types:
         type: u2be
       - id: grid_freq_hz_limit_lower
         type: u2be
-      - size: 2
+      - id: startup_self_check_time
+        type: u2be
       - id: current_time
         size: 6
 
