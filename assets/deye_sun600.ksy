@@ -37,7 +37,7 @@ types:
         type: u1
       - id: magic
         contents: [0x15]
-  
+
   data_msg_payload:
     seq:
       - id: payload_magic # Might be destination? 01 for logger, 02 for inverter
@@ -51,7 +51,8 @@ types:
       - size: 2
       - id: inverter_id
         size: 10
-      - size: 2
+      - id: unconfirmed_device_type # What does that even mean? Could also be state. Error maybe?
+        type: u2le
       - id: kwh_today
         type: u4le
       - id: kwh_total
@@ -103,7 +104,9 @@ types:
         type: u2be
       - id: mppt_count
         type: u1
-      - size: 4
+      - id: unconfirmed_phase_count
+        type: u1
+      - size: 3
       - id: pv_1_kwh_today
         type: u2le
       - id: pv_2_kwh_today
