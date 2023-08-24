@@ -113,7 +113,7 @@ class Protocol {
             grid: {
                 active_power_w: packet.payload.readUInt32LE(59),
 
-                kWh_daily: packet.payload.readUInt32LE(33) / 100,
+                kWh_today: packet.payload.readUInt32LE(33) / 100,
                 kWh_total: packet.payload.readUInt32LE(37) / 10,
 
                 v: packet.payload.readUInt16LE(45) / 10,
