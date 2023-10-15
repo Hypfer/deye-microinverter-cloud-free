@@ -346,36 +346,6 @@ Mine doesn't, however a [user fortunately posted a full response](https://www.ph
 
 </details>
 
-### Increasing the data logging interval
-
-The data reported by the logger actually isn't real-time but averaged and reported in a specific interval.
-By default, this interval is 5 minutes, meaning that even if you query the modbus registers every 30s,
-they will only contain new data after those 5 minutes have passed.
-
-Users of the cloud can contact the deye support to request a change of that interval to a different value.
-While this command was [captured and documented by a user](https://www.photovoltaikforum.com/thread/179529-daten-von-deye-sun-mikrowechselrichtern-abfangen/?postID=2844327#post2844327),
-it [unfortunately only seems to affect the data reported to the cloud](https://www.photovoltaikforum.com/thread/180129-deye-sun600-und-sun2000-erfahrungen/?postID=3116929#post3116929) and not
-the contents of the local modbus registers which still stick to the 5min interval :(
-
-Because of that, I've built a cloud replacement for these inverters that can be found in the dummycloud folder in this repo.
-
-<details>
-<summary>Click here to learn how to change that interval</summary>
-
-The interval can be controlled using the `AT+TIME` command.
-Sending just the command will respond with the current settings which by default are `5,60,120`.
-According to that forum post, those values mean:
-- 5 -> Data Uploading Period (5min)
-- 60 -> Data Acquisition Period (60s)
-- 120 -> Heart Rate (120s)
-
-To change this setting, the same AT command can be used if you know the magic number that serves as a password.
-You can fetch that by sending the `AT+KEY` command. By default, it seems to be `214028`.
-
-With the key acquired, sending `AT+TIME=214028,1,60,120` will then set the Data Uploading Period to 1min.
-
-</details>
-
 
 ## Donate
 
