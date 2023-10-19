@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Set working directory
-      run: cd dummycloud
+      run: cd dummycloud/
       working-directory: dummycloud
 
     - name: run ls -la
