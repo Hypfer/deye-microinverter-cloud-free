@@ -15,15 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Debug
-      run: |
-        pwd
-        ls -la
-      working-directory: dummycloud
+    - name: Set working directory to dummycloud
+      run: cd dummycloud
+      working-directory: ./dummycloud
 
-    - name: Set working directory
-      run: cd /home/runner/work/deye-microinverter-cloud-free/deye-microinverter-cloud-free/dummycloud
-      working-directory: dummycloud
-    
     - name: Build the Docker image
-      run: docker build . -t deye-dummycloud:latest
+      run: docker build -t deye-dummycloud:latest .
