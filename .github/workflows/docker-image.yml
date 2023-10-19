@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Set working directory
-      run: cd dummycloud
+      run: ls -la
       working-directory: dummycloud
     
     - name: Build the Docker image
