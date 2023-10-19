@@ -14,10 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Set working directory
-      run: ls -la
-      working-directory: dummycloud
     
     - name: Build the Docker image
       run: docker build . -t deye-dummycloud:latest
