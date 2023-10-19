@@ -22,7 +22,7 @@ jobs:
       working-directory: dummycloud
 
     - name: Set working directory
-      run: cd deye-microinverter-cloud-free/deye-microinverter-cloud-free/dummycloud
+      run: cd /home/runner/work/deye-microinverter-cloud-free/deye-microinverter-cloud-free/dummycloud
       working-directory: dummycloud
     
     - name: Build the Docker image
