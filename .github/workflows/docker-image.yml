@@ -20,6 +20,10 @@ jobs:
         pwd
         ls -la
       working-directory: dummycloud
+
+    - name: Set working directory
+      run: cd deye-microinverter-cloud-free/deye-microinverter-cloud-free/dummycloud
+      working-directory: dummycloud
     
     - name: Build the Docker image
       run: docker build . -t deye-dummycloud:latest
