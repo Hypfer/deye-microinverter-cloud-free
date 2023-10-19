@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build /dummycloud/ --file Dockerfile --tag deye-dummycloud:latest
+      run: docker build -f deye-microinverter-cloud-free/dummycloud/Dockerfile --tag deye-dummycloud:latest
