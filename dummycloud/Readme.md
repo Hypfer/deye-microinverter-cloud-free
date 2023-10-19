@@ -27,16 +27,17 @@ The dummycloud can be started using `npm run start`. Next to this readme, there'
 A `docker-compose.yml` entry could for example look like this:
 
 ```yml
+version: "3.5"
+
+services:
   deye-dummycloud:
-    build:
-      context: ./deye-microinverter-cloud-free/dummycloud/
-      dockerfile: Dockerfile
-    container_name: "deye-dummycloud"
-    restart: always
+    image: ghcr.io/vordenken/deye-microinverter-cloud-free/deye-dummycloud:latest
+    container_name: deye-dummycloud
+    restart: unless-stopped
     environment:
       - "LOGLEVEL=info"
       - "MQTT_BROKER_URL=mqtt://foobar.example"
-      # User those variables if the MQTT broker requires username and password
+      # Use those variables if the MQTT broker requires username and password
       # - "MQTT_USERNAME=example-user"
       # - "MQTT_PASSWORD=example-password"
     ports:
