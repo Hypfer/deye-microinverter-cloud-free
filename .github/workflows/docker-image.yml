@@ -20,4 +20,4 @@ jobs:
       working-directory: dummycloud
     
     - name: Build the Docker image
-      run: docker build -f Dockerfile -t deye-dummycloud:latest .
+      run: docker build . -t deye-dummycloud:latest
