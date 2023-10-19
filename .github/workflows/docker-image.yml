@@ -16,4 +16,4 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Build the Docker image
-      run: docker build -f ./home/runner/work/deye-microinverter-cloud-free/deye-microinverter-cloud-free/Dockerfile -t deye-dummycloud:latest .
+      run: docker build -f /home/runner/work/deye-microinverter-cloud-free/deye-microinverter-cloud-free/Dockerfile -t deye-dummycloud:latest .
