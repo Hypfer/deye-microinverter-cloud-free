@@ -40,9 +40,21 @@ types:
 
   data_msg_payload:
     seq:
-      - id: payload_magic # Might be destination? 01 for logger, 02 for inverter
+      - id: payload_magic # Might be destination? 01 for logger, 02 for inverter, 129 for logger historic
         size: 1 # has to be carried over to the response
-      - size: 6
+      - id: schema
+        enum: data_msg_payload_schema
+        type: u1
+      - id: data
+        size-eos: true
+        type:
+          switch-on: schema
+          cases:
+            "data_msg_payload_schema::microinverter": data_msg_payload_microinverter
+
+  data_msg_payload_microinverter:
+    seq:
+      - size: 5
       - id: unknown_counter_1
         type: u2be
       - size: 8
@@ -51,7 +63,7 @@ types:
       - size: 2
       - id: inverter_id
         size: 10
-      - id: unconfirmed_device_type # What does that even mean? Could also be state. Error maybe?
+      - id: unknown2
         type: u2le
       - id: kwh_today
         type: u4le
@@ -147,7 +159,6 @@ types:
       - id: current_time
         size: 6
 
-
 enums:
   msg_type:
     0x11: "handshake_response"
@@ -156,3 +167,8 @@ enums:
     0x41: "handshake"
     0x42: "data"
     0x47: "heartbeat"
+  
+  data_msg_payload_schema:
+    0x08: "microinverter"
+    0x11: "hybridinverter"
+    0x13: "relaymodule"

@@ -38,7 +38,7 @@ class MqttClient {
         }
 
         if (process.env.MQTT_CHECK_CERT) {
-             options.rejectUnauthorized = (process.env.MQTT_CHECK_CERT !== "false");
+            options.rejectUnauthorized = (process.env.MQTT_CHECK_CERT !== "false");
         }
 
         this.client = mqtt.connect(process.env.MQTT_BROKER_URL, options);

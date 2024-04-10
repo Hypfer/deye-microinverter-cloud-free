@@ -16,6 +16,7 @@ You also won't have to share any e-mail address or phone number.
 So far, the following devices are known to work like this:
 
 - Deye SUN600G3-EU-230
+- Deye SUN-M80G3-EU-Q0
 
 it should also be the same for other inverters of the same series including rebrands such as Bosswerk.<br/>
 If you have verified that it works with another device, feel free to extend this list.
