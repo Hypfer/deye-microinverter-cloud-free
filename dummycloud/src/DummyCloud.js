@@ -55,11 +55,15 @@ class DummyCloud {
                     case Protocol.MESSAGE_REQUEST_TYPES.DATA: {
                         const data = Protocol.parseDataPacketPayload(packet);
 
-                        Logger.debug(`DATA packet data from ${remoteAddress}`, data);
-                        this.emitData({
-                            header: packet.header,
-                            payload: data
-                        });
+                        if (data) {
+                            Logger.debug(`DATA packet data from ${remoteAddress}`, data);
+                            this.emitData({
+                                header: packet.header,
+                                payload: data
+                            });
+                        } else {
+                            Logger.debug("Discarded data packet");
+                        }
 
                         response = Protocol.buildTimeResponse(packet);
                         break;

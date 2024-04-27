@@ -69,6 +69,23 @@ class Protocol {
     }
 
     static parseDataPacketPayload(packet) {
+        switch (packet.payload[1]) {
+            case Protocol.DATA_PACKET_SCHEMAS.MICROINVERTER:
+                return Protocol.parseDataPacketMicroinverterPayload(packet);
+            default:
+                return null; //TODO: parse relay and string inverter packets
+        }
+
+
+    }
+
+    static parseDataPacketMicroinverterPayload(packet) {
+        if (!!(packet.payload[0] & 0b10000000)) {
+            // Seems to be one of these weird historic data packets from the SUN-M series. Ignoring for now
+            // TODO: understand what they mean and how they should be handled
+            return null;
+        }
+
         //TODO: there's a lot more in this packet
 
         return {
@@ -215,6 +232,12 @@ Protocol.MESSAGE_RESPONSE_TYPES = {
     DATA: 0x12,
     // wifi info reply is 0x13?
     HEARTBEAT: 0x17,
+};
+
+Protocol.DATA_PACKET_SCHEMAS = {
+    MICROINVERTER: 0x08,
+    HYBRIDINVERTER: 0x11,
+    RELAYMODULE: 0x13
 };
 
 module.exports = Protocol;

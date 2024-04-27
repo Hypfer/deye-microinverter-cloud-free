@@ -70,7 +70,8 @@
     "no-multi-spaces": "off",
     "semi": "off",
     "quotes": "off",
-    "indent": "off"
+    "indent": "off",
+    "no-extra-boolean-cast": "off"
 
 
   }
