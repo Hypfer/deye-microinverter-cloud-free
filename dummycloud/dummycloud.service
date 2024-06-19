@@ -1,0 +1,15 @@
+[Unit]
+Description=deye tdummycloud npm systemd-service
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/opt/dummycloud/env
+WorkingDirectory=/opt/dummycloud
+ExecStart=npm run start
+ExecReload=/bin/kill -HUP
+ExecStop=/usr/bin/killall node -9
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
