@@ -33,6 +33,15 @@ Here are the main things you will want to know about these microinverters:
 - They can be monitored and controlled via their local ModbusTCP interface
 - You can also completely replace the cloud with a local implementation: [dummycloud](./dummycloud)
 
+**2024-08-20 Update**
+
+Deye has started rolling out firmware updates for the logger that block both ModbusTCP access and prevent the mock cloud
+from working due to the introduction of TLS. Fortunately, for now it seems that newly bought inverters still come with older
+logger firmwares that work offline.
+Also equally fortunately, it seems that downgrading the firmware is possible as well.
+
+However, both of these things may change in the future.
+
 ## Preamble
 
 Compared to traditional PV setups where a single large inverter is connected to strings of many PV Panels, in a microinverter Setup, you have one small inverter for every 1-4 PV Panels.
@@ -87,7 +96,7 @@ Now, expand the `Device Information` on the `Status` page and ensure that your l
 
 ![firmware version](img/firmware_version.png)
 
-Older firmwares don't allow reconfiguration of the Wi-Fi AP, which is a a serious vulnerability, as it allows an attacker to easily gain access to your real Wi-Fi credentials.
+Older firmwares don't allow reconfiguration of the Wi-Fi AP, which is a serious vulnerability, as it allows an attacker to easily gain access to your real Wi-Fi credentials.
 
 If your firmware is older, you can find firmware update files in this repo: [https://github.com/dasrecht/deye-firmware](https://github.com/dasrecht/deye-firmware).
 You can flash them using the `Upgrade Firmware` page of the webinterface.
