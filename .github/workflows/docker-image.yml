@@ -17,7 +17,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build the Docker image
-        run: docker build -t ghcr.io/vordenken/deye-microinverter-cloud-free/deye-dummycloud:latest .
+        run: docker build -t ghcr.io/Hypfer/deye-microinverter-cloud-free/deye-dummycloud:latest .
         working-directory: ./dummycloud
 
       - name: Login to GitHub Container Registry
