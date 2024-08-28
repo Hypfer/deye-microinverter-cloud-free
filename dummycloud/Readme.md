@@ -31,7 +31,7 @@ version: "3.5"
 
 services:
   deye-dummycloud:
-    image: ghcr.io/vordenken/deye-microinverter-cloud-free/deye-dummycloud:latest
+    image: ghcr.io/Hypfer/deye-microinverter-cloud-free/deye-dummycloud:latest
     container_name: deye-dummycloud
     restart: unless-stopped
     environment:
