@@ -167,7 +167,7 @@ enums:
     0x41: "handshake"
     0x42: "data"
     0x47: "heartbeat"
-  
+
   data_msg_payload_schema:
     0x08: "microinverter"
     0x11: "hybridinverter"

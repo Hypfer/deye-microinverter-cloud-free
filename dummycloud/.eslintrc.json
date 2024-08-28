@@ -60,8 +60,6 @@
     "arrow-body-style": ["error", "always"],
     "regexp/no-unused-capturing-group": "off",
 
-
-
     "no-empty": "off",
     "brace-style": "off",
     "no-trailing-spaces": "off",
@@ -72,7 +70,5 @@
     "quotes": "off",
     "indent": "off",
     "no-extra-boolean-cast": "off"
-
-
   }
 }
