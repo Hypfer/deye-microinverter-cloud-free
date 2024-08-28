@@ -4,121 +4,123 @@ const net = require("net");
 const Protocol = require("./Protocol");
 
 class DummyCloud {
-    constructor() {
-        this.eventEmitter = new EventEmitter();
-        this.server = new net.Server();
-    }
+  constructor() {
+    this.eventEmitter = new EventEmitter();
+    this.server = new net.Server();
+  }
 
-    initialize() {
-        this.server.listen(DummyCloud.PORT, function() {
-            Logger.info(`Starting deye-dummycloud on port ${DummyCloud.PORT}`);
-        });
+  initialize() {
+    this.server.listen(DummyCloud.PORT, function () {
+      Logger.info(`Starting deye-dummycloud on port ${DummyCloud.PORT}`);
+    });
 
-        this.server.on("connection", (socket) => {
-            this.handleConnection(socket);
-        });
-    }
+    this.server.on("connection", (socket) => {
+      this.handleConnection(socket);
+    });
+  }
 
-    /**
-     * @private
-     * @param {net.Socket} socket
-     */
-    handleConnection(socket) {
-        const remoteAddress = socket.remoteAddress; // As this is a getter, it may become unavailable
-        Logger.info(`New connection from ${remoteAddress}`);
+  /**
+   * @private
+   * @param {net.Socket} socket
+   */
+  handleConnection(socket) {
+    const remoteAddress = socket.remoteAddress; // As this is a getter, it may become unavailable
+    Logger.info(`New connection from ${remoteAddress}`);
 
-        socket.on("data", (data) => {
-            Logger.trace(new Date().toISOString(), `Data received from client: ${data.toString()}`);
-            Logger.trace(new Date().toISOString(), "Data", data.toString("hex"));
+    socket.on("data", (data) => {
+      Logger.trace(
+        new Date().toISOString(),
+        `Data received from client: ${data.toString()}`,
+      );
+      Logger.trace(new Date().toISOString(), "Data", data.toString("hex"));
 
-            try {
-                const packet = Protocol.parsePacket(data);
-                let response;
+      try {
+        const packet = Protocol.parsePacket(data);
+        let response;
 
-                switch (packet.header.type) {
-                    case Protocol.MESSAGE_REQUEST_TYPES.HEARTBEAT: {
-                        response = Protocol.buildTimeResponse(packet);
-                        break;
-                    }
-                    case Protocol.MESSAGE_REQUEST_TYPES.HANDSHAKE: {
-                        const data = Protocol.parseLoggerPacketPayload(packet);
+        switch (packet.header.type) {
+          case Protocol.MESSAGE_REQUEST_TYPES.HEARTBEAT: {
+            response = Protocol.buildTimeResponse(packet);
+            break;
+          }
+          case Protocol.MESSAGE_REQUEST_TYPES.HANDSHAKE: {
+            const data = Protocol.parseLoggerPacketPayload(packet);
 
-                        Logger.debug(`Handshake packet data from ${remoteAddress}`, data);
-                        this.emitHandshake({
-                            header: packet.header,
-                            payload: data
-                        });
+            Logger.debug(`Handshake packet data from ${remoteAddress}`, data);
+            this.emitHandshake({
+              header: packet.header,
+              payload: data,
+            });
 
-                        response = Protocol.buildTimeResponse(packet);
-                        break;
-                    }
-                    case Protocol.MESSAGE_REQUEST_TYPES.DATA: {
-                        const data = Protocol.parseDataPacketPayload(packet);
+            response = Protocol.buildTimeResponse(packet);
+            break;
+          }
+          case Protocol.MESSAGE_REQUEST_TYPES.DATA: {
+            const data = Protocol.parseDataPacketPayload(packet);
 
-                        if (data) {
-                            Logger.debug(`DATA packet data from ${remoteAddress}`, data);
-                            this.emitData({
-                                header: packet.header,
-                                payload: data
-                            });
-                        } else {
-                            Logger.debug("Discarded data packet");
-                        }
-
-                        response = Protocol.buildTimeResponse(packet);
-                        break;
-                    }
-
-                    default: {
-                        response = Protocol.buildTimeResponse(packet);
-                    }
-                }
-
-                if (response) {
-                    Logger.trace("Response", response.toString("hex"));
-
-                    socket.write(response);
-                }
-            } catch (e) {
-                Logger.error(`Error while parsing packet from ${remoteAddress}`, e);
+            if (data) {
+              Logger.debug(`DATA packet data from ${remoteAddress}`, data);
+              this.emitData({
+                header: packet.header,
+                payload: data,
+              });
+            } else {
+              Logger.debug("Discarded data packet");
             }
-        });
 
-        socket.on("end", function() {
-            Logger.info(`Ending connection with ${remoteAddress}`);
-        });
+            response = Protocol.buildTimeResponse(packet);
+            break;
+          }
 
-        socket.on("close", function() {
-            Logger.info(`Closing connection with ${remoteAddress}`);
-        });
+          default: {
+            response = Protocol.buildTimeResponse(packet);
+          }
+        }
 
-        socket.on("error", function(err) {
-            Logger.error(`Error on dummycloud socket for ${remoteAddress}`, err);
-        });
-    }
+        if (response) {
+          Logger.trace("Response", response.toString("hex"));
 
-    emitData(data) {
-        this.eventEmitter.emit(DummyCloud.PACKET_EVENTS.Data, data);
-    }
+          socket.write(response);
+        }
+      } catch (e) {
+        Logger.error(`Error while parsing packet from ${remoteAddress}`, e);
+      }
+    });
 
-    onData(listener) {
-        this.eventEmitter.on(DummyCloud.PACKET_EVENTS.Data, listener);
-    }
+    socket.on("end", function () {
+      Logger.info(`Ending connection with ${remoteAddress}`);
+    });
 
-    emitHandshake(data) {
-        this.eventEmitter.emit(DummyCloud.PACKET_EVENTS.Handshake, data);
-    }
+    socket.on("close", function () {
+      Logger.info(`Closing connection with ${remoteAddress}`);
+    });
 
-    onHandshake(listener) {
-        this.eventEmitter.on(DummyCloud.PACKET_EVENTS.Handshake, listener);
-    }
+    socket.on("error", function (err) {
+      Logger.error(`Error on dummycloud socket for ${remoteAddress}`, err);
+    });
+  }
+
+  emitData(data) {
+    this.eventEmitter.emit(DummyCloud.PACKET_EVENTS.Data, data);
+  }
+
+  onData(listener) {
+    this.eventEmitter.on(DummyCloud.PACKET_EVENTS.Data, listener);
+  }
+
+  emitHandshake(data) {
+    this.eventEmitter.emit(DummyCloud.PACKET_EVENTS.Handshake, data);
+  }
+
+  onHandshake(listener) {
+    this.eventEmitter.on(DummyCloud.PACKET_EVENTS.Handshake, listener);
+  }
 }
 
 DummyCloud.PACKET_EVENTS = {
-    Data: "Data",
-    Handshake: "Handshake"
+  Data: "Data",
+  Handshake: "Handshake",
 };
-
 
 DummyCloud.PORT = 10000;
 

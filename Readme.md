@@ -87,7 +87,6 @@ Log in to the webinterface with the default credentials `admin:admin` and use th
 The AP-mode can be a bit unstable so prepare for the webinterface stopping to work occasionally.
 Once the inverter is connected to you Wi-Fi, this should not be an issue anymore.
 
-
 ### Ensuring a patched logger firmware
 
 After joining the inverter to you Wi-Fi network, connect to the webinterface again but this time using the IP in your network.
@@ -101,7 +100,6 @@ Older firmwares don't allow reconfiguration of the Wi-Fi AP, which is a serious 
 If your firmware is older, you can find firmware update files in this repo: [https://github.com/dasrecht/deye-firmware](https://github.com/dasrecht/deye-firmware).
 You can flash them using the `Upgrade Firmware` page of the webinterface.
 
-
 ### Securing the AP
 
 With the logger firmware upgraded, you should now use the webinterface to change SSID and Password for the AP of the inverter.
@@ -111,7 +109,6 @@ With the logger firmware upgraded, you should now use the webinterface to change
 Pick something not immediately obvious and relatively secure as - as mentioned before - it is all that prevents an attacker from connecting to that AP and reading out your main Wi-Fi credentials.
 
 I have been told that you can also use the wizard to disable the AP entirely, however personally, I like having a fallback way into the inverter, especially since I did not see a "Factory Reset" button on the device.
-
 
 ### Configuring your network
 
@@ -131,6 +128,7 @@ After connecting the inverter to your Wi-Fi network, securing it and blocking it
 For this there are different options.
 
 ### Local polling
+
 Most of the options rely on polling the local modbusTCP interface that uses the inverter logger serial number for authentication.
 
 To get this serial, simply look at the sticker on the device:
@@ -142,7 +140,6 @@ If you feel like doing something arcane and/or want to build something for that 
 
 Note that with internet access blocked, the inverter never receives any time information.
 This breaks the `Yield today` counter as it will never properly reset unless you manually set the time on each boot using modbus register `22`, `23` and `24`.
-
 
 #### With Home Assistant
 
@@ -156,7 +153,6 @@ The real world will obviously look slightly different but the idea should be the
 
 ![example home assistant dashboard](img/dashboard_example_mock.png)
 
-
 #### With other smarthome software
 
 If you're using OpenHAB, FHEM, ioBroker or something else, as long as it can speak MQTT, you can use for example [https://github.com/kbialek/deye-inverter-mqtt](https://github.com/kbialek/deye-inverter-mqtt) to connect your inverter to your smarthome.
@@ -164,20 +160,20 @@ If you're using OpenHAB, FHEM, ioBroker or something else, as long as it can spe
 A `docker-compose.yml` entry for that tool could look like this:
 
 ```yaml
-  deyetomqtt:
-    image: ghcr.io/kbialek/deye-inverter-mqtt
-    container_name: "deyetomqtt"
-    environment:
-      - LOG_LEVEL=DEBUG
-      - DEYE_DATA_READ_INTERVAL=60
-      - DEYE_METRIC_GROUPS=micro
-      - DEYE_LOGGER_SERIAL_NUMBER=4151234567
-      - DEYE_LOGGER_IP_ADDRESS=192.168.178.123
-      - DEYE_LOGGER_PORT=8899
-      - MQTT_HOST=192.168.178.2
-      - MQTT_TOPIC_PREFIX=deye
-      - MQTT_PORT=1883
-    restart: always
+deyetomqtt:
+  image: ghcr.io/kbialek/deye-inverter-mqtt
+  container_name: "deyetomqtt"
+  environment:
+    - LOG_LEVEL=DEBUG
+    - DEYE_DATA_READ_INTERVAL=60
+    - DEYE_METRIC_GROUPS=micro
+    - DEYE_LOGGER_SERIAL_NUMBER=4151234567
+    - DEYE_LOGGER_IP_ADDRESS=192.168.178.123
+    - DEYE_LOGGER_PORT=8899
+    - MQTT_HOST=192.168.178.2
+    - MQTT_TOPIC_PREFIX=deye
+    - MQTT_PORT=1883
+  restart: always
 ```
 
 Keep in mind that this might change in the future so make sure to always check the docs of the project itself.
@@ -230,7 +226,7 @@ Mine doesn't, however a [user fortunately posted a full response](https://www.ph
 <summary>Click here to show the AT command table</summary>
 
 | Command                                   | Vendor Description                                      |
-|-------------------------------------------|---------------------------------------------------------|
+| ----------------------------------------- | ------------------------------------------------------- |
 | AT+TIME                                   | Set/Get Device Time                                     |
 | AT+ADDRESS                                | Set/Get Device Address                                  |
 | AT+KEY                                    | Set/Get Device Password                                 |
@@ -332,7 +328,7 @@ Mine doesn't, however a [user fortunately posted a full response](https://www.ph
 | AT+SMARTAPSTART                           | Start smart AP config function.                         |
 | AT+WPS                                    | Start WPS.                                              |
 | AT+DISPS                                  | Disable power saving mode of WIFI                       |
-| AT+WIFI=UP/DOWN                           | Power down or up  the wifi chip.                        |
+| AT+WIFI=UP/DOWN                           | Power down or up the wifi chip.                         |
 | AT+MDCH                                   | Put on/off automatic switching WIFI mode.               |
 | AT+WSLKO                                  | Enable/Disable connect router with the best signal.     |
 | AT+DTIM                                   | Set/Get station listen interval(1~3).                   |
@@ -353,7 +349,6 @@ Mine doesn't, however a [user fortunately posted a full response](https://www.ph
 | AT+RFTESTMODE                             | RF test mode ON/OFF.                                    |
 
 </details>
-
 
 ## Donate
 
