@@ -133,7 +133,7 @@ class MqttClient {
                     "state_class": "measurement",
                     "object_id": `deye_dummycloud_${loggerSerial}_pv_${i}_v`,
                     "unique_id": `deye_dummycloud_${loggerSerial}_pv_${i}_v`,
-                    "expire_after": 300,
+                    "expire_after": 360,
                     "enabled_by_default": i < 3,
                     "device": device
                 }),
@@ -149,7 +149,7 @@ class MqttClient {
                     "state_class": "measurement",
                     "object_id": `deye_dummycloud_${loggerSerial}_pv_${i}_i`,
                     "unique_id": `deye_dummycloud_${loggerSerial}_pv_${i}_i`,
-                    "expire_after": 300,
+                    "expire_after": 360,
                     "enabled_by_default": i < 3,
                     "device": device
                 }),
@@ -165,7 +165,7 @@ class MqttClient {
                     "state_class": "measurement",
                     "object_id": `deye_dummycloud_${loggerSerial}_pv_${i}_w`,
                     "unique_id": `deye_dummycloud_${loggerSerial}_pv_${i}_w`,
-                    "expire_after": 300,
+                    "expire_after": 360,
                     "enabled_by_default": i < 3,
                     "device": device
                 }),
@@ -215,7 +215,7 @@ class MqttClient {
                 "state_class": "measurement",
                 "object_id": `deye_dummycloud_${loggerSerial}_grid_active_power_w`,
                 "unique_id": `deye_dummycloud_${loggerSerial}_grid_active_power_w`,
-                "expire_after": 300,
+                "expire_after": 360,
                 "device": device
             }),
             {retain: true}
@@ -258,7 +258,7 @@ class MqttClient {
                 "state_class": "measurement",
                 "object_id": `deye_dummycloud_${loggerSerial}_grid_v`,
                 "unique_id": `deye_dummycloud_${loggerSerial}_grid_v`,
-                "expire_after": 300,
+                "expire_after": 360,
                 "device": device
             }),
             {retain: true}
@@ -273,7 +273,7 @@ class MqttClient {
                 "state_class": "measurement",
                 "object_id": `deye_dummycloud_${loggerSerial}_grid_hz`,
                 "unique_id": `deye_dummycloud_${loggerSerial}_grid_hz`,
-                "expire_after": 300,
+                "expire_after": 360,
                 "device": device
             }),
             {retain: true}
@@ -289,7 +289,7 @@ class MqttClient {
                 "state_class": "measurement",
                 "object_id": `deye_dummycloud_${loggerSerial}_inverter_radiator_temperature`,
                 "unique_id": `deye_dummycloud_${loggerSerial}_inverter_radiator_temperature`,
-                "expire_after": 300,
+                "expire_after": 360,
                 "device": device
             }),
             {retain: true}
