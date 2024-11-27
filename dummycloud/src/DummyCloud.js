@@ -28,8 +28,8 @@ class DummyCloud {
         Logger.info(`New connection from ${remoteAddress}`);
 
         socket.on("data", (data) => {
-            Logger.trace(new Date().toISOString(), `Data received from client: ${data.toString()}`);
-            Logger.trace(new Date().toISOString(), "Data", data.toString("hex"));
+            Logger.trace(new Date().toISOString(), `Data received from client ${remoteAddress}: ${data.toString()}`);
+            Logger.trace(new Date().toISOString(), `Data ${remoteAddress}:`, data.toString("hex"));
 
             try {
                 const packet = Protocol.parsePacket(data);
@@ -37,6 +37,21 @@ class DummyCloud {
 
                 switch (packet.header.type) {
                     case Protocol.MESSAGE_REQUEST_TYPES.HEARTBEAT: {
+                        response = Protocol.buildTimeResponse(packet);
+                        break;
+                    }
+                    case Protocol.MESSAGE_REQUEST_TYPES.WIFI: {
+                        /*
+                            There isn't much of interest in this packet
+                            It can contain the SSID or the Logger SN
+                            + Some counters increasing every second
+                            
+                            On connect, it also can contain the signal strength
+                            But that's about it
+                            
+                            The signal strength over time would've been interesting, but it only gets sent on connect
+                            With that, it's close to useless
+                         */
                         response = Protocol.buildTimeResponse(packet);
                         break;
                     }
