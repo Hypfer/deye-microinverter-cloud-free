@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Jeden Montag um 00:00 UTC
+    - cron: '0 0 * * 1'
 
 jobs:
   build:
