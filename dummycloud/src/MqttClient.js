@@ -309,6 +309,7 @@ class MqttClient {
                 "state_topic": `${baseTopic}/inverter/efficiency`,
                 "name":"Inverter Efficiency",
                 "unit_of_measurement": "%",
+                "entity_category": "diagnostic",
                 "icon": "mdi:cog-transfer",
                 "state_class": "measurement",
                 "object_id": `deye_dummycloud_${loggerSerial}_inverter_efficiency`,
