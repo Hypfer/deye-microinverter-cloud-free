@@ -65,7 +65,7 @@ class MqttClient {
     }
 
     handleData(data) {
-        this.ensureAutoconf(data.header.loggerSerial.toString(), data.payload.inverter_meta.mppt_count);
+        this.ensureAutoconf(data.meta, data.header.loggerSerial.toString(), data.payload.inverter_meta.mppt_count);
         const baseTopic = `${MqttClient.TOPIC_PREFIX}/${data.header.loggerSerial.toString()}`;
 
         for (let i = 1; i <= data.payload.inverter_meta.mppt_count; i++) {
@@ -107,7 +107,7 @@ class MqttClient {
         this.client.publish(`${baseTopic}/inverter/radiator_temperature`, data.payload.inverter.radiator_temp_celsius.toString());
     }
 
-    ensureAutoconf(loggerSerial, mpptCount) {
+    ensureAutoconf(meta, loggerSerial, mpptCount) {
         // (Re-)publish every 4 hours
         if (Date.now() - (this.autoconfTimestamps[loggerSerial] ?? 0) <= 4 * 60 * 60 * 1000) {
             return;
@@ -117,6 +117,7 @@ class MqttClient {
             "manufacturer":"Deye",
             "model":"Microinverter",
             "name":`Deye Microinverter ${loggerSerial}`,
+            "configuration_url": `http://${meta.remoteAddress}/index_cn.html`,
             "identifiers":[
                 `deye_dummycloud_${loggerSerial}`
             ]

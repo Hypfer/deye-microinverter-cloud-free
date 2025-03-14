@@ -10,8 +10,13 @@ class DummyCloud {
     }
 
     initialize() {
-        this.server.listen(DummyCloud.PORT, function() {
-            Logger.info(`Starting deye-dummycloud on port ${DummyCloud.PORT}`);
+        this.server.listen(
+            {
+                port: DummyCloud.PORT,
+                host: "0.0.0.0"
+            }, 
+            function() {
+                Logger.info(`Starting deye-dummycloud on port ${DummyCloud.PORT}`);
         });
 
         this.server.on("connection", (socket) => {
@@ -74,7 +79,10 @@ class DummyCloud {
                             Logger.debug(`DATA packet data from ${remoteAddress}`, data);
                             this.emitData({
                                 header: packet.header,
-                                payload: data
+                                payload: data,
+                                meta: {
+                                    remoteAddress: remoteAddress
+                                }
                             });
                         } else {
                             Logger.debug("Discarded data packet");
