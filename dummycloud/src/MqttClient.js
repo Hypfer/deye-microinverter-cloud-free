@@ -4,7 +4,7 @@ const mqtt = require("mqtt");
 
 class MqttClient {
     /**
-     * 
+     *
      * @param {import("./DummyCloud")} dummyCloud
      */
     constructor(dummyCloud) {
@@ -105,6 +105,13 @@ class MqttClient {
         this.client.publish(`${baseTopic}/grid/hz`, data.payload.grid.hz.toString());
 
         this.client.publish(`${baseTopic}/inverter/radiator_temperature`, data.payload.inverter.radiator_temp_celsius.toString());
+
+
+        const totalDcPower = Object.values(data.payload.pv).reduce((sum, pv) => sum + pv.w, 0);
+        const acPower = Math.abs(data.payload.grid.active_power_w);
+        const efficiency = totalDcPower > 0 ? ((acPower / totalDcPower) * 100).toFixed(2) : "null";
+        
+        this.client.publish(`${baseTopic}/inverter/efficiency`, efficiency);
     }
 
     ensureAutoconf(meta, loggerSerial, mpptCount) {
@@ -296,6 +303,21 @@ class MqttClient {
             {retain: true}
         );
 
+        this.client.publish(
+            `homeassistant/sensor/deye_dummycloud_${loggerSerial}/${loggerSerial}_inverter_efficiency/config`,
+            JSON.stringify({
+                "state_topic": `${baseTopic}/inverter/efficiency`,
+                "name":"Inverter Efficiency",
+                "unit_of_measurement": "%",
+                "icon": "mdi:cog-transfer",
+                "state_class": "measurement",
+                "object_id": `deye_dummycloud_${loggerSerial}_inverter_efficiency`,
+                "unique_id": `deye_dummycloud_${loggerSerial}_inverter_efficiency`,
+                "expire_after": 360,
+                "device": device
+            }),
+            {retain: true}
+        );
 
         this.autoconfTimestamps[loggerSerial] = Date.now();
     }
