@@ -109,8 +109,8 @@ class MqttClient {
 
         const totalDcPower = Object.values(data.payload.pv).reduce((sum, pv) => sum + pv.w, 0);
         const acPower = Math.abs(data.payload.grid.active_power_w);
-        const efficiency = totalDcPower > 0 && totalDcPower < acPower ? ((acPower / totalDcPower) * 100).toFixed(2) : "null";
-        
+        const efficiency = totalDcPower > 0 && totalDcPower > acPower ? ((acPower / totalDcPower) * 100).toFixed(2) : "null";
+
         this.client.publish(`${baseTopic}/inverter/efficiency`, efficiency);
     }
 
