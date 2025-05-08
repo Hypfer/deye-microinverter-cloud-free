@@ -315,6 +315,7 @@ class MqttClient {
                 "object_id": `deye_dummycloud_${loggerSerial}_inverter_efficiency`,
                 "unique_id": `deye_dummycloud_${loggerSerial}_inverter_efficiency`,
                 "expire_after": 360,
+                "value_template": "{{ value_json }}",
                 "device": device
             }),
             {retain: true}
